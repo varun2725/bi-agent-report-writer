@@ -1,0 +1,11 @@
+{
+  "date_range": "2026-09-01 to 2026-10-12",
+  "metrics": {"total_revenue": 54000, "wow_change": 0.12},
+  "trends": [
+    "Revenue is up 12% compared to last week",
+    "Electronics is the top category with 50,000 in sales"
+  ],
+  "anomalies": [
+    {"date": "2026-10-03", "issue": "Revenue dropped 40%", "possible_cause": "Possible stock shortage"}
+  ]
+}
