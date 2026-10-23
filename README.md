@@ -1,15 +1,35 @@
-# Report Writer Agent (Agent 3)
+# Business Intelligence Agent Project
 
-Part of the Business Intelligence Agent project (Data Fetcher → Insight Analyser → Report Writer).
+A 3-agent pipeline that turns a sales CSV into a plain-English weekly business report.
 
-Takes the Analyser's insights (JSON) and writes a plain-English weekly report as `weekly_report.md` using Gemini.
+CSV -> Data Fetcher -> Insight Analyser -> Report Writer -> `weekly_report.md`
+
+| Agent | Owner | File |
+|---|---|---|
+| Data Fetcher | Balveer | `agents/data_fetcher.py` (temporary stand-in for now) |
+| Insight Analyser | Elava | `agents/insight_analyser.py` (temporary stand-in for now) |
+| Report Writer | Varun S | `agents/report_writer.py` |
+
+## Setup
+
+```
+pip install -r requirements.txt
+```
+Create a `.env` file containing `GEMINI_API_KEY=your-key`.
 
 ## Run
-pip install -r requirements.txt
-python test_writer.py          # mock LLM, no key needed
-python test_writer.py live     # real Gemini (needs GEMINI_API_KEY in .env)
 
-## Input format
-{"metrics": {...}, "trends": [...], "anomalies": [...]}
+```
+python make_sample_data.py        # creates sales.csv with planted anomalies
+python main.py sales.csv          # mock LLM, no key needed
+python main.py sales.csv live     # real Gemini report
+streamlit run app.py              # dashboard with charts and report
+```
 
-Author: Varun S
+## Data contract
+
+- Fetcher output: `date_range, weekly_totals, daily_totals, by_category, raw_stats`
+- Analyser output: `metrics, trends, anomalies`
+- Writer output: `weekly_report.md`
+
+Anomalies are found with statistics in code; the LLM only writes the report.
